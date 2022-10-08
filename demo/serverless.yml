@@ -12,6 +12,11 @@ provider:
     STAGE: ${self:provider.stage}
     LOG_LEVEL: INFO
 
+package:
+  patterns:
+    - "!**/__pycache__"
+    - "!**/.mypy_cache"
+
 functions:
   hello:
     handler: src/hello.handler
