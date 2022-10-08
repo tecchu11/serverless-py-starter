@@ -1,0 +1,28 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+      - id: detect-aws-credentials
+      - id: detect-private-key
+      - id: name-tests-test
+      - id: trailing-whitespace
+
+  - repo: https://github.com/pycqa/isort
+    rev: c5e8fa75dda5f764d20f66a215d71c21cfa198e1
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/psf/black
+    rev: ae2c0758c9e61a385df9700dc9c231bf54887041
+    hooks:
+      - id: black
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: bdfdfda2221c4fd123dbc9ac0f2074951bd5af58
+    hooks:
+      - id: mypy
