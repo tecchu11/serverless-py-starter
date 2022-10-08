@@ -1,4 +1,6 @@
 ### Python ###
+# cache
+__pycache__
 # Environments
 .venv
 # mypy
