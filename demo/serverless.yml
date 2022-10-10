@@ -20,6 +20,8 @@ package:
 functions:
   hello:
     handler: src/hello.handler
+    layers:
+      - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPython:37
     environment:
       POWERTOOLS_SERVICE_NAME: DemoHelloFunction
 

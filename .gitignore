@@ -15,3 +15,6 @@ dmypy.json
 
 ### node ###
 node_modules/
+
+### docker volume ###
+docker/*/volume
