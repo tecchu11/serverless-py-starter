@@ -1,3 +1,5 @@
 services:
   Demo:
     path: demo
+  AwsKinesisStream:
+    path: aws_kinesis_stream
