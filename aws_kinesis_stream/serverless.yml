@@ -1,0 +1,66 @@
+service: AwsKinesisStream
+frameworkVersion: '3'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: dev
+  region: ap-northeast-1
+  logRetentionInDays: 30
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+
+package:
+  patterns:
+    - "!**/__pycache__"
+    - "!**/.mypy_cache"
+
+functions:
+  main:
+    handler: src/main.handler
+    events:
+      - stream:
+          type: kinesis
+          arn:
+            Fn::GetAtt: [ KinesisForMain, Arn ]
+          batchSize: 10
+          enabled: true
+          maximumRetryAttempts: 3
+          maximumRecordAgeInSeconds: 600
+          parallelizationFactor: 10
+          startingPosition: LATEST
+    layers:
+      - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPython:37
+    environment:
+      POWERTOOLS_SERVICE_NAME: AwsKinesisStreamMainFunction
+
+resources:
+  Resources:
+    KinesisForMain:
+      Type: AWS::Kinesis::Stream
+      Properties:
+        Name: kinesis-for-main-${self:provider.stage}
+        RetentionPeriodHours: 24
+        ShardCount: 5
+
+custom:
+  alerts:
+    alarms:
+      - functionErrors
+      - functionInvocations
+  localstack:
+    stages:
+      - dev
+    host: http://localhost
+    edgePort: 4566
+    autostart: false
+  prune:
+    automatic: true
+    number: 3
+
+plugins:
+  - serverless-localstack
+  - serverless-plugin-aws-alerts
+  - serverless-prune-plugin
