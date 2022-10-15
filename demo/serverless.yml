@@ -1,21 +1,22 @@
 service: Demo
 frameworkVersion: '3'
-useDotenv: true
 
 provider:
   name: aws
   runtime: python3.9
-  stage: dev
+  stage: local
   region: ap-northeast-1
   logRetentionInDays: 30
   environment:
-    STAGE: ${self:provider.stage}
+    STAGE: ${opt:stage, self:provider.stage}
     LOG_LEVEL: INFO
 
 package:
   patterns:
     - "!**/__pycache__"
     - "!**/.mypy_cache"
+    - "!requirements/**"
+    - "!tests/**"
 
 functions:
   hello:
@@ -24,14 +25,15 @@ functions:
       - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPython:37
     environment:
       POWERTOOLS_SERVICE_NAME: DemoHelloFunction
+      MESSAGE: ${env:MESSAGE}
 
 custom:
   alerts:
     alarms:
       - functionErrors
-      - functionInvocations
   localstack:
     stages:
+      - local
       - dev
     host: http://localhost
     edgePort: 4566
@@ -39,8 +41,15 @@ custom:
   prune:
     automatic: true
     number: 3
+  pythonRequirements:
+    fileName: requirements/${self:custom.requirements.${opt:stage, self:provider.stage}}
+    usePipenv: false
+  requirements:
+    local: requirements_local.txt
+    dev: requirements.txt
 
 plugins:
   - serverless-localstack
   - serverless-plugin-aws-alerts
   - serverless-prune-plugin
+  - serverless-python-requirements
