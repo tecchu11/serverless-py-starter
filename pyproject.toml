@@ -2,5 +2,5 @@
 profile = "black"
 
 [tool.black]
-target-version = ['py39']
+target-version = ["py39"]
 line-length = 120
