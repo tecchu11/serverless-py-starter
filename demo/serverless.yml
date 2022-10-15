@@ -1,5 +1,6 @@
 service: Demo
 frameworkVersion: '3'
+useDotenv: true
 
 provider:
   name: aws

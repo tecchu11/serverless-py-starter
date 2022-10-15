@@ -1,5 +1,6 @@
 service: AwsKinesisStream
 frameworkVersion: '3'
+useDotenv: true
 
 provider:
   name: aws
