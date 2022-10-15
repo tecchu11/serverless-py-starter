@@ -12,7 +12,7 @@ The aws lambda is built by serverless-framework with python.
 
 - Run `make install`
 
-# How to deploy (to localstack)
+# How to deploy
 
 - If you want to deploy to localstack, run `docker compose up -d` beforehand
 
