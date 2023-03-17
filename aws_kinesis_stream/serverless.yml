@@ -14,10 +14,8 @@ provider:
 
 package:
   patterns:
-    - "!**/__pycache__"
-    - "!**/.mypy_cache"
-    - "!requirements/**"
-    - "!tests/**"
+    - "!**"
+    - "src/**"
 
 functions:
   main:
