@@ -12,10 +12,11 @@ repos:
       - id: name-tests-test
       - id: trailing-whitespace
 
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.256
     hooks:
-      - id: isort
+      - id: ruff
+        args: [ --fix, --exit-non-zero-on-fix ]
 
   - repo: https://github.com/psf/black
     rev: 23.1.0
