@@ -25,7 +25,7 @@ package:
 functions:
   hello:
     handler: src/hello.handler
-    layers:
+    layers:  # Please comment out when deploy to localstack.
       - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:34
     environment:
       POWERTOOLS_SERVICE_NAME: DemoHelloFunction
