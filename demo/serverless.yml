@@ -1,6 +1,5 @@
 service: Demo
 frameworkVersion: '3'
-useDotenv: true
 
 provider:
   name: aws
@@ -9,8 +8,14 @@ provider:
   region: ap-northeast-1
   logRetentionInDays: 30
   environment:
-    STAGE: ${opt:stage, self:provider.stage}
+    STAGE: ${opt:stage}
     LOG_LEVEL: INFO
+
+params:
+  local:
+    requirements_file: requirements/requirements_local.txt
+  dev:
+    requirements_file: requirements/requirements.txt
 
 package:
   patterns:
@@ -20,11 +25,10 @@ package:
 functions:
   hello:
     handler: src/hello.handler
-    layers:
-#      - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPython:37
+    layers:  # Please comment out when deploy to localstack.
+      - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:34
     environment:
       POWERTOOLS_SERVICE_NAME: DemoHelloFunction
-      MESSAGE: ${env:MESSAGE}
 
 custom:
   alerts:
@@ -33,7 +37,6 @@ custom:
   localstack:
     stages:
       - local
-      - dev
     host: http://localhost
     edgePort: 4566
     autostart: false
@@ -41,11 +44,8 @@ custom:
     automatic: true
     number: 3
   pythonRequirements:
-    fileName: requirements/${self:custom.requirements.${opt:stage, self:provider.stage}}
+    fileName: ${param:requirements_file}
     usePipenv: false
-  requirements:
-    local: requirements_local.txt
-    dev: requirements.txt
 
 plugins:
   - serverless-localstack
