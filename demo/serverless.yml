@@ -4,7 +4,7 @@ useDotenv: true
 
 provider:
   name: aws
-  runtime: python3.9
+  runtime: python3.10
   stage: local
   region: ap-northeast-1
   logRetentionInDays: 30
@@ -21,7 +21,7 @@ functions:
   hello:
     handler: src/hello.handler
     layers:
-      - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPython:37
+#      - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPython:37
     environment:
       POWERTOOLS_SERVICE_NAME: DemoHelloFunction
       MESSAGE: ${env:MESSAGE}

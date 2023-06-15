@@ -4,7 +4,7 @@ useDotenv: true
 
 provider:
   name: aws
-  runtime: python3.9
+  runtime: python3.10
   stage: local
   region: ap-northeast-1
   logRetentionInDays: 30
