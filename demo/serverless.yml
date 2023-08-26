@@ -3,7 +3,7 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: python3.10
+  runtime: python3.11
   stage: local
   region: ap-northeast-1
   logRetentionInDays: 30
